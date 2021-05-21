@@ -1,30 +1,9 @@
-import React,{useState} from 'react'
+import React from 'react'
 import Square from './Square'
 
-export const Board = () => {
+export const Board = ({board, hadnleClick}) => {
 
-    const [board,setBoard]=useState(Array(9).fill(null))
-    const [nextPlayer,seNextPlayer]=useState(false);
-    console.log(board);
-
-    const hadnleClick=(position)=>{
-        if(board[position]){
-            return;
-        }
-
-        setBoard((prev)=>{
-            return prev.map((updatedState,pos)=>{
-                if(pos===position)
-                    return nextPlayer ? 'X':'O';
-                return updatedState;
-            });
-        });
-    
-    seNextPlayer((prev)=>!prev);
-        
-    };
-
-    const renderSquare=(position)=>{
+        const renderSquare=(position)=>{
         return(
             <Square val={board[position]} onClick={()=>{
                 hadnleClick(position);
