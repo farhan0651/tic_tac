@@ -1,23 +1,53 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Square from './Square'
 
 export const Board = () => {
+
+    const [board,setBoard]=useState(Array(9).fill(null))
+    const [nextPlayer,seNextPlayer]=useState(false);
+    console.log(board);
+
+    const hadnleClick=(position)=>{
+        if(board[position]){
+            return;
+        }
+
+        setBoard((prev)=>{
+            return prev.map((updatedState,pos)=>{
+                if(pos===position)
+                    return nextPlayer ? 'X':'O';
+                return updatedState;
+            });
+        });
+    
+    seNextPlayer((prev)=>!prev);
+        
+    };
+
+    const renderSquare=(position)=>{
+        return(
+            <Square val={board[position]} onClick={()=>{
+                hadnleClick(position);
+            }} />
+        );
+    }
+
     return (
         <div className='board'>
             <div className='board-row'>
-                <Square val={1}/>
-                <Square val={2}/>
-                <Square val={3}/>
+                {renderSquare(0)}
+                {renderSquare(1)}
+                {renderSquare(2)}
             </div>
             <div className='board-row'>
-                <Square val={4}/>
-                <Square val={5}/>
-                <Square val={6}/>
+                {renderSquare(3)}
+                {renderSquare(4)}
+                {renderSquare(5)}
             </div>
             <div className='board-row'>
-                <Square val={7}/>
-                <Square val={8}/>
-                <Square val={9}/>
+                {renderSquare(6)}
+                {renderSquare(7)}
+                {renderSquare(8)}
             </div>
         </div>
     )
