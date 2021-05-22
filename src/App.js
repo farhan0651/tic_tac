@@ -7,10 +7,11 @@ import { calculateWinner } from "./winnerLogic";
 
 const App=()=>{
 
-    const [history,setHistory]=useState([{board:Array(9).fill(null),isNext: true}])
+    const NewGame=[{board:Array(9).fill(null),isNext: true}]
+    const [history,setHistory]=useState(NewGame)
     const [currentMove,setCurrentMove]=useState(0);
     const current=history[currentMove];
-    const winner=calculateWinner(current.board);
+    const {winner,winningCombination}=calculateWinner(current.board);
     console.log('history',history);   
 
     const hadnleClick=(position)=>{
@@ -37,11 +38,17 @@ const App=()=>{
     setCurrentMove(move);
   }
 
+  const onNewGame=()=>{
+    setHistory(NewGame);
+    setCurrentMove(0);
+  }
+
   return(
   <div className='app'>
     <h1>Tic Tac Toe</h1>
     <StatusMessage winner={winner} current={current} />
-    <Board board={current.board} hadnleClick={hadnleClick} />
+    <Board board={current.board} hadnleClick={hadnleClick} winningCombination={winningCombination}/>
+    <button type="button" onClick={onNewGame}>Start New Game</button>
     <History history={history} moveTo={moveTo} currentMove={currentMove} />
   </div>
   );
